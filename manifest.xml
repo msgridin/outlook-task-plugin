@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+<OfficeApp xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:type="MessageRead">
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+           xsi:type="MailApp">
+
     <Id>12345678-aaaa-bbbb-cccc-1234567890ab</Id>
     <Version>1.0.0.0</Version>
-    <ProviderName>My Plugins</ProviderName>
+    <ProviderName>msgridin</ProviderName>
     <DefaultLocale>en-US</DefaultLocale>
     <DisplayName DefaultValue="Create Task Plugin"/>
     <Description DefaultValue="Create task from an email"/>
+    <IconUrl DefaultValue="https://msgridin.github.io/outlook-task-plugin/assets/icon32.png"/>
+    <SupportUrl DefaultValue="https://msgridin.github.io/"/>
 
     <Hosts>
         <Host Name="Mailbox"/>
@@ -30,44 +35,55 @@
 
     <Permissions>ReadItem</Permissions>
 
-    <ExtensionPoint xsi:type="MessageReadCommandSurface">
-        <OfficeTab id="MessageReadCommandSurface">
-            <Group id="group1">
-                <Label resid="groupLabel"/>
-                <Control xsi:type="Button" id="btnSend">
-                    <Label resid="buttonLabel"/>
-                    <Supertip>
-                        <Title resid="buttonLabel"/>
-                        <Description resid="buttonDesc"/>
-                    </Supertip>
-                    <Icon>
-                        <bt:Image size="16" resid="icon16"/>
-                        <bt:Image size="32" resid="icon32"/>
-                        <bt:Image size="80" resid="icon80"/>
-                    </Icon>
-                    <Action xsi:type="ShowTaskpane">
-                        <SourceLocation resid="taskpaneUrl"/>
-                    </Action>
-                </Control>
-            </Group>
-        </OfficeTab>
-    </ExtensionPoint>
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.0">
+        <Requirements>
+            <bt:Sets DefaultMinVersion="1.5">
+                <bt:Set Name="Mailbox"/>
+            </bt:Sets>
+        </Requirements>
+        <Hosts>
+            <Host xsi:type="MailHost">
+                <ExtensionPoint xsi:type="MessageReadCommandSurface">
+                    <OfficeTab id="MessageReadCommandSurface">
+                        <Group id="msgReadGroup">
+                            <Label resid="groupLabel"/>
+                            <Control xsi:type="Button" id="sendHttpButton">
+                                <Label resid="buttonLabel"/>
+                                <Supertip>
+                                    <Title resid="buttonLabel"/>
+                                    <Description resid="buttonDesc"/>
+                                </Supertip>
+                                <Icon>
+                                    <bt:Image size="16" resid="icon16"/>
+                                    <bt:Image size="32" resid="icon32"/>
+                                    <bt:Image size="80" resid="icon80"/>
+                                </Icon>
+                                <Action xsi:type="ShowTaskpane">
+                                    <SourceLocation resid="taskpaneUrl"/>
+                                </Action>
+                            </Control>
+                        </Group>
+                    </OfficeTab>
+                </ExtensionPoint>
+            </Host>
+        </Hosts>
 
-    <Resources>
-        <bt:Images>
-            <bt:Image id="icon16" DefaultValue="https://msgridin.github.io/outlook-task-plugin/assets/icon16.png"/>
-            <bt:Image id="icon32" DefaultValue="https://msgridin.github.io/outlook-task-plugin/assets/icon32.png"/>
-            <bt:Image id="icon80" DefaultValue="https://msgridin.github.io/outlook-task-plugin/assets/icon80.png"/>
-        </bt:Images>
-        <bt:Urls>
-            <bt:Url id="taskpaneUrl" DefaultValue="https://msgridin.github.io/outlook-task-plugin/taskpane.html"/>
-        </bt:Urls>
-        <bt:ShortStrings>
-            <bt:String id="groupLabel" DefaultValue="Task Tools"/>
-            <bt:String id="buttonLabel" DefaultValue="Create task"/>
-        </bt:ShortStrings>
-        <bt:LongStrings>
-            <bt:String id="buttonDesc" DefaultValue="Create task from email"/>
-        </bt:LongStrings>
-    </Resources>
+        <Resources>
+            <bt:Images>
+                <bt:Image id="icon16" DefaultValue="https://msgridin.github.io/outlook-task-plugin/assets/icon16.png"/>
+                <bt:Image id="icon32" DefaultValue="https://msgridin.github.io/outlook-task-plugin/assets/icon32.png"/>
+                <bt:Image id="icon80" DefaultValue="https://msgridin.github.io/outlook-task-plugin/assets/icon80.png"/>
+            </bt:Images>
+            <bt:Urls>
+                <bt:Url id="taskpaneUrl" DefaultValue="https://msgridin.github.io/outlook-task-plugin/taskpane.html"/>
+            </bt:Urls>
+            <bt:ShortStrings>
+                <bt:String id="groupLabel" DefaultValue="Task Tools"/>
+                <bt:String id="buttonLabel" DefaultValue="Create Task"/>
+            </bt:ShortStrings>
+            <bt:LongStrings>
+                <bt:String id="buttonDesc" DefaultValue="Create task from email"/>
+            </bt:LongStrings>
+        </Resources>
+    </VersionOverrides>
 </OfficeApp>
