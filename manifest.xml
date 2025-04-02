@@ -22,7 +22,7 @@
     <FormSettings>
         <Form xsi:type="ItemRead">
             <DesktopSettings>
-                <SourceLocation DefaultValue="https://your-username.github.io/your-repo/taskpane.html"/>
+                <SourceLocation DefaultValue="https://msgridin.github.io/outlook-task-plugin/taskpane.html"/>
                 <RequestedHeight>150</RequestedHeight>
             </DesktopSettings>
         </Form>
@@ -55,12 +55,12 @@
 
     <Resources>
         <bt:Images>
-            <bt:Image id="icon16" DefaultValue="https://your-username.github.io/your-repo/assets/icon16.png"/>
-            <bt:Image id="icon32" DefaultValue="https://your-username.github.io/your-repo/assets/icon32.png"/>
-            <bt:Image id="icon80" DefaultValue="https://your-username.github.io/your-repo/assets/icon80.png"/>
+            <bt:Image id="icon16" DefaultValue="https://msgridin.github.io/outlook-task-plugin/assets/icon16.png"/>
+            <bt:Image id="icon32" DefaultValue="https://msgridin.github.io/outlook-task-plugin/assets/icon32.png"/>
+            <bt:Image id="icon80" DefaultValue="https://msgridin.github.io/outlook-task-plugin/assets/icon80.png"/>
         </bt:Images>
         <bt:Urls>
-            <bt:Url id="taskpaneUrl" DefaultValue="https://your-username.github.io/your-repo/taskpane.html"/>
+            <bt:Url id="taskpaneUrl" DefaultValue="https://msgridin.github.io/outlook-task-plugin/taskpane.html"/>
         </bt:Urls>
         <bt:ShortStrings>
             <bt:String id="groupLabel" DefaultValue="Task Tools"/>
