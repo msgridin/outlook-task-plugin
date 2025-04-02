@@ -47,7 +47,7 @@
                     <OfficeTab id="MessageReadCommandSurface">
                         <Group id="msgReadGroup">
                             <Label resid="groupLabel"/>
-                            <Control xsi:type="Button" id="sendHttpButton">
+                            <Control xsi:type="Button" id="createTaskButton">
                                 <Label resid="buttonLabel"/>
                                 <Supertip>
                                     <Title resid="buttonLabel"/>
