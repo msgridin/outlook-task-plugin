@@ -22,6 +22,8 @@
     });
 
     function createTask() {
+        console.log("Creating task...");
+        console.log(Office.context.mailbox.item.itemId);
         Office.context.mailbox.item.body.setAsync(
             "Create task",
             {
