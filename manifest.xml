@@ -31,10 +31,9 @@
             </DesktopSettings>
         </Form>
     </FormSettings>
-    <Permissions>ReadWriteItem</Permissions>
+    <Permissions>ReadItem</Permissions>
     <Rule xsi:type="RuleCollection" Mode="Or">
-        <Rule xsi:type="ItemIs" ItemType="Appointment" FormType="Edit"/>
-        <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
+        <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
     </Rule>
     <DisableEntityHighlighting>false</DisableEntityHighlighting>
     <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
@@ -47,12 +46,12 @@
             <Host xsi:type="MailHost">
                 <DesktopFormFactor>
 
-                    <!-- Message Compose -->
-                    <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+                    <!-- Message Read (только для входящих сообщений) -->
+                    <ExtensionPoint xsi:type="MessageReadCommandSurface">
                         <OfficeTab id="TabDefault">
-                            <Group id="msgComposeCmdGroup">
+                            <Group id="msgReadCmdGroup">
                                 <Label resid="CommandsGroup.Label"/>
-                                <Control xsi:type="Button" id="msgComposeInsertGist">
+                                <Control xsi:type="Button" id="msgReadCreateTask">
                                     <Label resid="TaskpaneButton.Label"/>
                                     <Supertip>
                                         <Title resid="TaskpaneButton.SupertipTitle"/>
@@ -70,6 +69,7 @@
                             </Group>
                         </OfficeTab>
                     </ExtensionPoint>
+
                 </DesktopFormFactor>
             </Host>
         </Hosts>
