@@ -25,18 +25,35 @@
         console.log("Creating task...");
         const item = Office.context.mailbox.item;
 
-        console.log("Subject: " + item.subject);
-
         item.body.getAsync("text", (result) => {
             if (result.status === Office.AsyncResultStatus.Succeeded) {
-                console.log("Body: " + result.value);
+                const emailDetails = {
+                    subject: item.subject,
+                    body: result.value,
+                    sender: {
+                        name: item.from.displayName,
+                        email: item.from.emailAddress
+                    },
+                    date: item.dateTimeCreated
+                };
+
+                console.log("Email details:", emailDetails);
+
+                fetch("http://localhost:3333/outlook/task", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(emailDetails)
+                })
+                    .then(response => response.json())
+                    .then(data => console.log("Server response:", data))
+                    .catch(error => console.error("Error sending data:", error));
+
             } else {
                 console.error("Failed to get body: " + result.error.message);
             }
         });
-
-        console.log("Sender: " + item.from.displayName + " <" + item.from.emailAddress + ">");
-        console.log("Date: " + item.dateTimeCreated);
     }
 
 </script>
