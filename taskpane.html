@@ -1,18 +1,33 @@
-<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. -->
 <!DOCTYPE html>
 <html>
 
 <head>
     <!-- Office JavaScript API -->
-    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <script type=\"text/javascript\" src=\"https://appsforoffice.microsoft.com/lib/1/hosted/office.js\"></script>
 </head>
 
 <body>
-<p>This add-in will create new task from the email.</p>
-<button id="createTaskButton">Create task</button>
+<p>This add-in will log the subject of the email.</p>
+<button id=\"createTaskButton\">Create task</button>
 
 </body>
 
-<script src="taskpane.js"></script>
+<script>
+
+    Office.onReady((info) => {
+        if (info.host === Office.HostType.Outlook) {
+            document.getElementById("createTaskButton").onclick = onButtonClick;
+        }
+    });
+
+    /**
+     * Logs the subject of the email to the console.
+     */
+    function onButtonClick() {
+        const subject = Office.context.mailbox.item.subject;
+        console.log("Email subject: " + subject);
+    }
+
+</script>
 
 </html>
