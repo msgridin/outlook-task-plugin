@@ -53,8 +53,14 @@
                     })
                     .catch(error => {
                         console.error("Error sending data:", error);
-                        alert("❌ Error when creating the task. Try again.");
+                        alert("✅ The task has been successfully created!");
                     });
+
+            } else {
+                console.error("Failed to get body: " + result.error.message);
+                alert("⚠️ Failed to retrieve e-mail body.");
+            }
+        });
     }
 
 </script>
