@@ -47,13 +47,24 @@
                     body: JSON.stringify(emailDetails)
                 })
                     .then(response => response.json())
-                    .then(data => console.log("Server response:", data))
-                    .catch(error => console.error("Error sending data:", error));
+                    .then(data => {
+                        console.log("Server response:", data);
 
-            } else {
-                console.error("Failed to get body: " + result.error.message);
-            }
-        });
+                        Office.context.mailbox.item.notificationMessages.addAsync("taskSuccess", {
+                            type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
+                            message: "The task has been successfully created!",
+                            icon: "icon16",
+                            persistent: false
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error sending data:", error);
+
+                        Office.context.mailbox.item.notificationMessages.addAsync("taskError", {
+                            type: Office.MailboxEnums.ItemNotificationMessageType.ErrorMessage,
+                            message: "Error when creating a task. Try again."
+                        });
+                    });
     }
 
 </script>
