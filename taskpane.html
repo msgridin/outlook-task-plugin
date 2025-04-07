@@ -49,21 +49,11 @@
                     .then(response => response.json())
                     .then(data => {
                         console.log("Server response:", data);
-
-                        Office.context.mailbox.item.notificationMessages.addAsync("taskSuccess", {
-                            type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
-                            message: "The task has been successfully created!",
-                            icon: "icon16",
-                            persistent: false
-                        });
+                        alert("✅ The task has been successfully created!");
                     })
                     .catch(error => {
                         console.error("Error sending data:", error);
-
-                        Office.context.mailbox.item.notificationMessages.addAsync("taskError", {
-                            type: Office.MailboxEnums.ItemNotificationMessageType.ErrorMessage,
-                            message: "Error when creating a task. Try again."
-                        });
+                        alert("❌ Error when creating the task. Try again.");
                     });
     }
 
