@@ -49,16 +49,27 @@
                     .then(response => response.json())
                     .then(data => {
                         console.log("Server response:", data);
-                        alert("✅ The task has been successfully created!");
+                        Office.context.mailbox.item.notificationMessages.addAsync("taskSuccess", {
+                            type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
+                            message: "The task has been successfully created",
+                            icon: "icon16",
+                            persistent: false
+                        });
                     })
                     .catch(error => {
                         console.error("Error sending data:", error);
-                        alert("✅ The task has been successfully created!");
+                        Office.context.mailbox.item.notificationMessages.addAsync("taskError", {
+                            type: Office.MailboxEnums.ItemNotificationMessageType.ErrorMessage,
+                            message: "The task has been successfully created!"
+                        });
                     });
 
             } else {
                 console.error("Failed to get body: " + result.error.message);
-                alert("⚠️ Failed to retrieve e-mail body.");
+                Office.context.mailbox.item.notificationMessages.addAsync("taskBodyError", {
+                    type: Office.MailboxEnums.ItemNotificationMessageType.ErrorMessage,
+                    message: "Failed to retrieve e-mail body."
+                });
             }
         });
     }
