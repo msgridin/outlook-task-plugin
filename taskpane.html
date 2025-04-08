@@ -34,6 +34,10 @@
                         name: item.from.displayName,
                         email: item.from.emailAddress
                     },
+                    recipient: {
+                        name: Office.context.mailbox.userProfile.displayName,
+                        email: Office.context.mailbox.userProfile.emailAddress
+                    },
                     date: item.dateTimeCreated
                 };
 
