@@ -159,7 +159,13 @@
 
     function getTask() {
         const messageId = Office.context.mailbox.item.internetMessageId;
-        fetch(`https://profile.wah.prod.bid/api/candidate/getTask?id=${encodeURIComponent(messageId)}`)
+        fetch("https://profile.wah.prod.bid/api/candidate/getTask", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ id: messageId })
+        })
             .then(response => response.json())
             .then(data => {
                 console.log("Fetched task:", data);
