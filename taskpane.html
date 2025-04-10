@@ -72,10 +72,12 @@
         }
     });
 
-    function formatDate(dateString) {
+    function formatDisplayDate(dateString) {
         if (!dateString || dateString === '0001-01-01T00:00:00Z') return '—';
         const date = new Date(dateString);
-        return isNaN(date.getTime()) ? '—' : date.toLocaleString();
+        if (isNaN(date.getTime())) return dateString;
+        const pad = (n) => n.toString().padStart(2, '0');
+        return `${pad(date.getDate())}-${pad(date.getMonth() + 1)}-${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
     }
 
     function displayResult(data) {
@@ -84,8 +86,8 @@
         resultDiv.innerHTML = `
                 <div><span class="label">Subject:</span> ${data.subject || '—'}</div>
                 <div><span class="label">Status:</span> ${data.status || '—'}</div>
-                <div><span class="label">Date:</span> ${formatDate(data.date)}</div>
-                <div><span class="label">Due Date:</span> ${formatDate(data.duedate)}</div>
+                <div><span class="label">Date:</span> ${formatDisplayDate(data.date)}</div>
+                <div><span class="label">Due Date:</span> ${formatDisplayDate(data.duedate)}</div>
                 <div><span class="label">Author:</span> ${data.author || '—'}</div>
                 <div><span class="label">Developer:</span> ${data.developer || '—'}</div>
                 <div><span class="label">Tester:</span> ${data.tester || '—'}</div>
