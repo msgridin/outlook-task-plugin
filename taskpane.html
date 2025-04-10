@@ -28,7 +28,7 @@
         item.body.getAsync("text", (result) => {
             if (result.status === Office.AsyncResultStatus.Succeeded) {
                 const emailDetails = {
-                    id: item.itemId,
+                    id: item.internetMessageId,
                     subject: item.subject,
                     body: result.value,
                     sender: {
