@@ -16,6 +16,15 @@
             gap: 10px;
             margin-bottom: 20px;
         }
+        #createTaskButton, #getTaskButton {
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
         #createTaskButton {
             background-color: #4CAF50;
             color: white;
@@ -23,14 +32,6 @@
         #getTaskButton {
             background-color: #007BFF;
             color: white;
-        }
-        #createTaskButton, #getTaskButton {
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: fit-content;
         }
         #createTaskButton:hover {
             background-color: #45a049;
@@ -71,14 +72,20 @@
         }
     });
 
+    function formatDate(dateString) {
+        if (!dateString || dateString === '0001-01-01T00:00:00Z') return '—';
+        const date = new Date(dateString);
+        return isNaN(date.getTime()) ? '—' : date.toLocaleString();
+    }
+
     function displayResult(data) {
         const resultDiv = document.getElementById("result");
         resultDiv.style.display = 'block';
         resultDiv.innerHTML = `
                 <div><span class="label">Subject:</span> ${data.subject || '—'}</div>
                 <div><span class="label">Status:</span> ${data.status || '—'}</div>
-                <div><span class="label">Date:</span> ${data.date || '—'}</div>
-                <div><span class="label">Due Date:</span> ${data.duedate || '—'}</div>
+                <div><span class="label">Date:</span> ${formatDate(data.date)}</div>
+                <div><span class="label">Due Date:</span> ${formatDate(data.duedate)}</div>
                 <div><span class="label">Author:</span> ${data.author || '—'}</div>
                 <div><span class="label">Developer:</span> ${data.developer || '—'}</div>
                 <div><span class="label">Tester:</span> ${data.tester || '—'}</div>
