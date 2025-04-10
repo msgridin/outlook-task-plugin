@@ -75,9 +75,7 @@
     function formatDisplayDate(dateString) {
         if (!dateString || dateString === '0001-01-01T00:00:00Z') return '—';
         const date = new Date(dateString);
-        if (isNaN(date.getTime())) return dateString;
-        const pad = (n) => n.toString().padStart(2, '0');
-        return `${pad(date.getDate())}-${pad(date.getMonth() + 1)}-${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+        return !isNaN(date.getTime()) ? date.toLocaleString() : dateString;
     }
 
     function displayResult(data) {
