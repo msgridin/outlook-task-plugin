@@ -99,8 +99,8 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        console.log("Server response:", data.Data);
-                        displayResult(data);
+                        console.log("Server response:", data);
+                        displayResult(data.Data);
                         Office.context.mailbox.item.notificationMessages.addAsync("taskSuccess", {
                             type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
                             message: "The task has been successfully created",
