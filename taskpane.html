@@ -158,14 +158,6 @@
     }
 
     function getTask() {
-
-        Office.context.mailbox.makeEwsRequestAsync(testEws, (result) => {
-            if (result.status === Office.AsyncResultStatus.Succeeded) {
-                console.log("EWS доступен ✅", result.value);
-            } else {
-                console.error("EWS не работает ❌", result.error);
-            }
-        });
         const messageId = Office.context.mailbox.item.internetMessageId;
         fetch("https://profile.wah.prod.bid/api/candidate/getTask", {
             method: "POST",
