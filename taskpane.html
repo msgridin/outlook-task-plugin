@@ -125,13 +125,15 @@
         const resultDiv = document.getElementById("result");
         resultDiv.style.display = 'block';
         resultDiv.innerHTML = `
-            <div><span class="label">Subject:</span> ${data.subject || '—'}</div>
-            <div><span class="label">Status:</span> ${data.status || '—'}</div>
-            <div><span class="label">Date:</span> ${formatDisplayDate(data.date)}</div>
-            <div><span class="label">Due Date:</span> ${formatDisplayDate(data.duedate)}</div>
-            <div><span class="label">Author:</span> ${data.author || '—'}</div>
-            <div><span class="label">Developer:</span> ${data.developer || '—'}</div>
-            <div><span class="label">Tester:</span> ${data.tester || '—'}</div>
+            <table style="border-collapse: collapse; width: 100%;">
+                <tr><td class="label" style="padding: 4px 8px; width: 120px;">Subject:</td><td>${data.subject || '—'}</td></tr>
+                <tr><td class="label" style="padding: 4px 8px;">Status:</td><td>${data.status || '—'}</td></tr>
+                <tr><td class="label" style="padding: 4px 8px;">Date:</td><td>${formatDisplayDate(data.date)}</td></tr>
+                <tr><td class="label" style="padding: 4px 8px;">Due Date:</td><td>${formatDisplayDate(data.duedate)}</td></tr>
+                <tr><td class="label" style="padding: 4px 8px;">Author:</td><td>${data.author || '—'}</td></tr>
+                <tr><td class="label" style="padding: 4px 8px;">Developer:</td><td>${data.developer || '—'}</td></tr>
+                <tr><td class="label" style="padding: 4px 8px;">Tester:</td><td>${data.tester || '—'}</td></tr>
+            </table>
         `;
     }
 
