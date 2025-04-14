@@ -46,7 +46,6 @@
             border: 1px solid #ccc;
             border-radius: 8px;
             background-color: #f9f9f9;
-            white-space: pre-wrap;
         }
         .label {
             font-weight: bold;
@@ -58,6 +57,16 @@
         li.status {
             font-weight: bold;
             margin-top: 10px;
+        }
+        .task-item {
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        .task-details {
+            display: none;
+            margin-left: 10px;
+            font-size: 90%;
+            color: #555;
         }
     </style>
 </head>
@@ -76,7 +85,7 @@
         if (info.host === Office.HostType.Outlook) {
             document.getElementById("createTaskButton").onclick = createTask;
             document.getElementById("getTaskButton").onclick = getTask;
-            getTasks(); // get tasks on plugin open
+            getTasks();
         }
     });
 
@@ -106,14 +115,24 @@
         const grouped = {};
         dataArray.forEach(task => {
             if (!grouped[task.status]) grouped[task.status] = [];
-            grouped[task.status].push(task.subject);
+            grouped[task.status].push(task);
         });
 
         let html = '<ul>';
         for (const status in grouped) {
             html += `<li class="status">${status}<ul>`;
-            grouped[status].forEach(subject => {
-                html += `<li>${subject}</li>`;
+            grouped[status].forEach(task => {
+                const taskId = `task-${task.number}`;
+                html += `<li class="task-item" onclick="toggleDetails('${taskId}')">${task.subject}
+                    <div id="${taskId}" class="task-details">
+                        <div><span class='label'>Number:</span> ${task.number}</div>
+                        <div><span class='label'>Date:</span> ${formatDisplayDate(task.date)}</div>
+                        <div><span class='label'>Due Date:</span> ${formatDisplayDate(task.duedate)}</div>
+                        <div><span class='label'>Author:</span> ${task.author || '—'}</div>
+                        <div><span class='label'>Developer:</span> ${task.developer || '—'}</div>
+                        <div><span class='label'>Tester:</span> ${task.tester || '—'}</div>
+                    </div>
+                </li>`;
             });
             html += '</ul></li>';
         }
@@ -122,10 +141,17 @@
         resultDiv.innerHTML = html;
     }
 
-    function createTask() {
-        console.log("Creating task...");
-        const item = Office.context.mailbox.item;
+    function toggleDetails(id) {
+        const el = document.getElementById(id);
+        if (el.style.display === 'none' || el.style.display === '') {
+            el.style.display = 'block';
+        } else {
+            el.style.display = 'none';
+        }
+    }
 
+    function createTask() {
+        const item = Office.context.mailbox.item;
         item.body.getAsync("text", (result) => {
             if (result.status === Office.AsyncResultStatus.Succeeded) {
                 const emailDetails = {
@@ -214,7 +240,6 @@
             .then(response => response.json())
             .then(json => {
                 if (json && json.Data) {
-                    console.log(json);
                     displayTaskList(json.Data);
                 } else {
                     const resultDiv = document.getElementById("result");
