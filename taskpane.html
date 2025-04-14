@@ -140,6 +140,10 @@
     function displayTaskList(dataArray) {
         const resultDiv = document.getElementById("result");
         resultDiv.style.display = 'block';
+        if (!dataArray || dataArray.length === 0) {
+            resultDiv.innerHTML = "No tasks found.";
+            return;
+        }
         const grouped = {};
         dataArray.forEach(task => {
             if (!grouped[task.status]) grouped[task.status] = [];
