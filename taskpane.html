@@ -76,7 +76,7 @@
         if (info.host === Office.HostType.Outlook) {
             document.getElementById("createTaskButton").onclick = createTask;
             document.getElementById("getTaskButton").onclick = getTask;
-            fetchAllTasks(); // fetch tasks on plugin open
+            getTasks(); // get tasks on plugin open
         }
     });
 
@@ -201,10 +201,10 @@
             });
     }
 
-    function fetchAllTasks() {
+    function getTasks() {
         const name = Office.context.mailbox.userProfile.displayName;
         const email = Office.context.mailbox.userProfile.emailAddress;
-        fetch("https://profile.wah.prod.bid/api/candidate/getTask", {
+        fetch("https://profile.wah.prod.bid/api/candidate/getTasks", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
