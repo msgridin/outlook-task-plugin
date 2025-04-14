@@ -16,7 +16,7 @@
             gap: 10px;
             margin-bottom: 20px;
         }
-        #createTaskButton, #getTaskButton {
+        #createTaskButton, #getTaskButton, #getAllTasksButton {
             border: none;
             padding: 12px;
             font-size: 16px;
@@ -33,11 +33,18 @@
             background-color: #007BFF;
             color: white;
         }
+        #getAllTasksButton {
+            background-color: #FFC107;
+            color: black;
+        }
         #createTaskButton:hover {
             background-color: #45a049;
         }
         #getTaskButton:hover {
             background-color: #0069d9;
+        }
+        #getAllTasksButton:hover {
+            background-color: #e0a800;
         }
         #result {
             display: none;
@@ -63,10 +70,16 @@
             margin-bottom: 5px;
         }
         .task-details {
-            display: none;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
             margin-left: 10px;
             font-size: 90%;
             color: #555;
+        }
+        .task-details.open {
+            max-height: 500px;
+            padding-top: 5px;
         }
     </style>
 </head>
@@ -76,6 +89,7 @@
 <div class="button-container">
     <button id="createTaskButton">Create task</button>
     <button id="getTaskButton">Get task</button>
+    <button id="getAllTasksButton">Get all tasks</button>
 </div>
 
 <div id="result"></div>
@@ -85,6 +99,7 @@
         if (info.host === Office.HostType.Outlook) {
             document.getElementById("createTaskButton").onclick = createTask;
             document.getElementById("getTaskButton").onclick = getTask;
+            document.getElementById("getAllTasksButton").onclick = getTasks;
             getTasks();
         }
     });
@@ -95,18 +110,9 @@
         return !isNaN(date.getTime()) ? date.toLocaleString() : dateString;
     }
 
-    function displayResult(data) {
-        const resultDiv = document.getElementById("result");
-        resultDiv.style.display = 'block';
-        resultDiv.innerHTML = `
-                <div><span class="label">Subject:</span> ${data.subject || '—'}</div>
-                <div><span class="label">Status:</span> ${data.status || '—'}</div>
-                <div><span class="label">Date:</span> ${formatDisplayDate(data.date)}</div>
-                <div><span class="label">Due Date:</span> ${formatDisplayDate(data.duedate)}</div>
-                <div><span class="label">Author:</span> ${data.author || '—'}</div>
-                <div><span class="label">Developer:</span> ${data.developer || '—'}</div>
-                <div><span class="label">Tester:</span> ${data.tester || '—'}</div>
-            `;
+    function toggleDetails(id) {
+        const el = document.getElementById(id);
+        el.classList.toggle('open');
     }
 
     function displayTaskList(dataArray) {
@@ -141,13 +147,29 @@
         resultDiv.innerHTML = html;
     }
 
-    function toggleDetails(id) {
-        const el = document.getElementById(id);
-        if (el.style.display === 'none' || el.style.display === '') {
-            el.style.display = 'block';
-        } else {
-            el.style.display = 'none';
-        }
+    function getTasks() {
+        const name = Office.context.mailbox.userProfile.displayName;
+        const email = Office.context.mailbox.userProfile.emailAddress;
+        fetch("https://profile.wah.prod.bid/api/candidate/getTasks", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email })
+        })
+            .then(response => response.json())
+            .then(json => {
+                if (json && json.Data) {
+                    displayTaskList(json.Data);
+                } else {
+                    const resultDiv = document.getElementById("result");
+                    resultDiv.style.display = 'block';
+                    resultDiv.textContent = "No tasks returned.";
+                }
+            })
+            .catch(error => {
+                const resultDiv = document.getElementById("result");
+                resultDiv.style.display = 'block';
+                resultDiv.textContent = "Error fetching tasks: " + error.message;
+            });
     }
 
     function createTask() {
@@ -171,9 +193,7 @@
 
                 fetch("https://profile.wah.prod.bid/api/candidate/createTask", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(emailDetails)
                 })
                     .then(response => response.json())
@@ -211,9 +231,7 @@
         const messageId = Office.context.mailbox.item.internetMessageId;
         fetch("https://profile.wah.prod.bid/api/candidate/getTask", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: messageId })
         })
             .then(response => response.json())
@@ -224,33 +242,6 @@
                 const resultDiv = document.getElementById("result");
                 resultDiv.style.display = 'block';
                 resultDiv.textContent = "Error fetching task: " + error.message;
-            });
-    }
-
-    function getTasks() {
-        const name = Office.context.mailbox.userProfile.displayName;
-        const email = Office.context.mailbox.userProfile.emailAddress;
-        fetch("https://profile.wah.prod.bid/api/candidate/getTasks", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ name, email })
-        })
-            .then(response => response.json())
-            .then(json => {
-                if (json && json.Data) {
-                    displayTaskList(json.Data);
-                } else {
-                    const resultDiv = document.getElementById("result");
-                    resultDiv.style.display = 'block';
-                    resultDiv.textContent = "No tasks returned.";
-                }
-            })
-            .catch(error => {
-                const resultDiv = document.getElementById("result");
-                resultDiv.style.display = 'block';
-                resultDiv.textContent = "Error fetching tasks: " + error.message;
             });
     }
 </script>
