@@ -126,13 +126,13 @@
         resultDiv.style.display = 'block';
         resultDiv.innerHTML = `
             <table style="border-collapse: collapse; width: 100%;">
-                <tr><td class="label" style="padding: 4px 8px; width: 120px;">Subject:</td><td>${data.subject || '—'}</td></tr>
-                <tr><td class="label" style="padding: 4px 8px;">Status:</td><td>${data.status || '—'}</td></tr>
-                <tr><td class="label" style="padding: 4px 8px;">Date:</td><td>${formatDisplayDate(data.date)}</td></tr>
-                <tr><td class="label" style="padding: 4px 8px;">Due Date:</td><td>${formatDisplayDate(data.duedate)}</td></tr>
-                <tr><td class="label" style="padding: 4px 8px;">Author:</td><td>${data.author || '—'}</td></tr>
-                <tr><td class="label" style="padding: 4px 8px;">Developer:</td><td>${data.developer || '—'}</td></tr>
-                <tr><td class="label" style="padding: 4px 8px;">Tester:</td><td>${data.tester || '—'}</td></tr>
+                <tr><td class="label" style="padding: 2px 4px; width: 60px;">Subject:</td><td>${data.subject || '—'}</td></tr>
+                <tr><td class="label" style="padding: 2px 4px;">Status:</td><td>${data.status || '—'}</td></tr>
+                <tr><td class="label" style="padding: 2px 4px;">Date:</td><td>${formatDisplayDate(data.date)}</td></tr>
+                <tr><td class="label" style="padding: 2px 4px;">Due Date:</td><td>${formatDisplayDate(data.duedate)}</td></tr>
+                <tr><td class="label" style="padding: 2px 4px;">Author:</td><td>${data.author || '—'}</td></tr>
+                <tr><td class="label" style="padding: 2px 4px;">Developer:</td><td>${data.developer || '—'}</td></tr>
+                <tr><td class="label" style="padding: 2px 4px;">Tester:</td><td>${data.tester || '—'}</td></tr>
             </table>
         `;
     }
