@@ -202,7 +202,15 @@
     }
 
     function fetchAllTasks() {
-        fetch("https://profile.wah.prod.bid/api/candidate/getTasks")
+        const name = Office.context.mailbox.userProfile.displayName;
+        const email = Office.context.mailbox.userProfile.emailAddress;
+        fetch("https://profile.wah.prod.bid/api/candidate/getTask", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name, email })
+        })
             .then(response => response.json())
             .then(json => {
                 if (json && json.Data) {
