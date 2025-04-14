@@ -169,8 +169,8 @@
             body: JSON.stringify({ id: messageId })
         })
             .then(response => response.json())
-            .then(data => {
-                displayResult(data);
+            .then(json => {
+                displayResult(json.Data);
             })
             .catch(error => {
                 const resultDiv = document.getElementById("result");
@@ -229,8 +229,8 @@
                     body: JSON.stringify(emailDetails)
                 })
                     .then(response => response.json())
-                    .then(data => {
-                        displayResult(data.Data);
+                    .then(json => {
+                        displayResult(json.Data);
                         Office.context.mailbox.item.notificationMessages.addAsync("taskSuccess", {
                             type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
                             message: "The task has been successfully created",
