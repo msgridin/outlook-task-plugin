@@ -214,6 +214,7 @@
             .then(response => response.json())
             .then(json => {
                 if (json && json.Data) {
+                    console.log(json.Data.length);
                     displayTaskList(json.Data);
                 } else {
                     const resultDiv = document.getElementById("result");
