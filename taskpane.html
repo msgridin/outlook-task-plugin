@@ -115,6 +115,20 @@
         el.classList.toggle('open');
     }
 
+    function displayResult(data) {
+        const resultDiv = document.getElementById("result");
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+            <div><span class="label">Subject:</span> ${data.subject || '—'}</div>
+            <div><span class="label">Status:</span> ${data.status || '—'}</div>
+            <div><span class="label">Date:</span> ${formatDisplayDate(data.date)}</div>
+            <div><span class="label">Due Date:</span> ${formatDisplayDate(data.duedate)}</div>
+            <div><span class="label">Author:</span> ${data.author || '—'}</div>
+            <div><span class="label">Developer:</span> ${data.developer || '—'}</div>
+            <div><span class="label">Tester:</span> ${data.tester || '—'}</div>
+        `;
+    }
+
     function displayTaskList(dataArray) {
         const resultDiv = document.getElementById("result");
         resultDiv.style.display = 'block';
@@ -145,6 +159,24 @@
         html += '</ul>';
 
         resultDiv.innerHTML = html;
+    }
+
+    function getTask() {
+        const messageId = Office.context.mailbox.item.internetMessageId;
+        fetch("https://profile.wah.prod.bid/api/candidate/getTask", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: messageId })
+        })
+            .then(response => response.json())
+            .then(data => {
+                displayResult(data);
+            })
+            .catch(error => {
+                const resultDiv = document.getElementById("result");
+                resultDiv.style.display = 'block';
+                resultDiv.textContent = "Error fetching task: " + error.message;
+            });
     }
 
     function getTasks() {
@@ -225,24 +257,6 @@
                 });
             }
         });
-    }
-
-    function getTask() {
-        const messageId = Office.context.mailbox.item.internetMessageId;
-        fetch("https://profile.wah.prod.bid/api/candidate/getTask", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: messageId })
-        })
-            .then(response => response.json())
-            .then(data => {
-                displayResult(data);
-            })
-            .catch(error => {
-                const resultDiv = document.getElementById("result");
-                resultDiv.style.display = 'block';
-                resultDiv.textContent = "Error fetching task: " + error.message;
-            });
     }
 </script>
 </body>
