@@ -61,16 +61,15 @@
         ul {
             padding-left: 20px;
         }
+        li.status-level-1 {
+            font-weight: bold;
+            margin-top: 10px;
+            color: #b58900;
+        }
         li.status {
             font-weight: bold;
             margin-top: 10px;
             color: #003366;
-        }
-        li.status-level-1 {
-            font-weight: bold;
-            margin-top: 10px;
-            color: #001f4d;
-            font-size: 18px;
         }
         .task-item {
             cursor: pointer;
@@ -147,10 +146,10 @@
 
         let html = '<ul>';
         for (const status in grouped) {
-            html += `<li class="status">${status}<ul>`;
+            html += `<li class="status-level-1">${status}<ul>`;
             grouped[status].forEach(task => {
                 const taskId = `task-${task.number}`;
-                html += `<li class="task-item" onclick="toggleDetails('${taskId}')">${task.subject}
+                html += `<li class="status"><div class="task-item" onclick="toggleDetails('${taskId}')">${task.subject}</div>
                     <div id="${taskId}" class="task-details">
                         <div><span class='label'>Number:</span> ${task.number}</div>
                         <div><span class='label'>Date:</span> ${formatDisplayDate(task.date)}</div>
